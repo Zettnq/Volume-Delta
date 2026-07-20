@@ -23,7 +23,7 @@ class VolumeDeltaEngine:
         print(f"Minute data saved to {cache_path}")
 
     def run(self):
-        # 1. Загрузить/получить минутные данные
+        # 1. Fetch 1-minute data
         df_1m = self._cached_minute_data()
         if df_1m is None:
             df_1m = self.fetcher.fetch_ohlcv(
@@ -35,15 +35,15 @@ class VolumeDeltaEngine:
                 return pd.DataFrame()
             self._save_minute_data(df_1m)
 
-        # 2. Вычислить дельту на каждом минутном баре
+        # 2. Count delta
         direction = ((df_1m['close'] > df_1m['open']).astype(int) -
                      (df_1m['close'] < df_1m['open']).astype(int))
         df_1m['volume_delta'] = df_1m['volume'] * direction
 
-        # 3. Частоту берём как есть из конфига (например, '1h', '4h', '1d')
+        # 3. 
         rule = self.config.target_tf
 
-        # 4. Агрегация в целевой ТФ
+        # 4. Aggregation to target timeframe
         df_target = df_1m.resample(rule).agg({
             'open': 'first',
             'high': 'max',
