@@ -1,0 +1,6 @@
+dataclasses
+datetime
+ccxt
+mplfinance
+pandas
+pathlib
