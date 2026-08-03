@@ -11,5 +11,5 @@ class CVDConfig:
     cache_dir: str = "cache"
     force_reload: bool = False
     
-    method: str = "bvc"
+    method: str = "bvc" 
     bvc_ewma_span: int = 50

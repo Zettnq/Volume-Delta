@@ -8,7 +8,7 @@ config = CVDConfig(
     target_tf="4h",
     since=datetime(2026, 7, 1, tzinfo=timezone.utc),  
     until=datetime(2026, 8, 3, tzinfo=timezone.utc),  
-    method="bvc",
+    method="bvc",                                          #candle for candle-based tick rule
     bvc_ewma_span=50,
     force_reload=True
 )
