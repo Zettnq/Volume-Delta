@@ -4,3 +4,4 @@ ccxt
 mplfinance
 pandas
 pathlib
+scipy

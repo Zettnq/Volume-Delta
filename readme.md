@@ -1,17 +1,17 @@
 # Volume Delta Calculator (CVD Module)
 
-A tool for calculating volume delta on any timeframe based on minute candles.
+A tool for calculating volume delta on any timeframe based on Bulk Volume Classification or Candle-Based Tick-Rule
 Suitable for plotting Cumulative Volume Delta (CVD) and analyzing order flow.
 
 ## Features
 - Loads minute-by-minute candles via CCXT 
-- Tick rule: `close > open` → buy volume, otherwise sell volume
+- BVC or tick rule
 - Aggregation to any timeframe (`1h`, `4h`, `1d`, ...)
 - Caching of minute-by-minute data (Pickle) to conserve API quotas
 - OHLCV visualization + delta histogram
 
 ## How to use
-- Configurate paranetres in run.py
+- Configurate parametres in run.py
     ```python
         config = CVDConfig(
         symbol="BTC/USDT",
