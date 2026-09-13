@@ -4,19 +4,22 @@ from plotter import plot_volume_delta
 from datetime import datetime, timezone  
 
 config = CVDConfig(
-    symbol="BTC/USDT",
-    target_tf="4h",
-    since=datetime(2026, 7, 1, tzinfo=timezone.utc),  
-    until=datetime(2026, 8, 3, tzinfo=timezone.utc),  
-    method="bvc",                                          #candle for candle-based tick rule
-    bvc_ewma_span=50,
-    force_reload=True
+    symbol="BTC/USDT", # Ticker 
+    target_tf="1h", # Timeframe 
+    since=datetime(2026, 7, 1, tzinfo=timezone.utc), 
+    until=datetime(2026, 8, 3, tzinfo=timezone.utc), 
+    method="bvc", # "Candle" for candle-rule 
+    bvc_ewma_span=50, 
+    force_reload=True, # False if you want to use cached data
+    output_dir="output" 
 )
 
 engine = VolumeDeltaEngine(config)
 df_delta = engine.run()
 
 if not df_delta.empty:
+    csv_path = engine.export_csv(df_delta)
+    
     print("\n" + "=" * 60)
     print("VERIFICATION")
     print("=" * 60)
@@ -27,6 +30,8 @@ if not df_delta.empty:
     print(f"Total candles: {len(df_delta)}")
     print(f"Delta range:   {df_delta['volume_delta'].min():.2f} → {df_delta['volume_delta'].max():.2f}")
     print(f"Delta sum:     {df_delta['volume_delta'].sum():.2f}")
+    if csv_path:
+        print(f"CSV file:      {csv_path}")
     print("=" * 60 + "\n")
 
     print(df_delta.head(10))

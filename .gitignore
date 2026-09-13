@@ -1,3 +1,8 @@
 /.vscode
-/cache
 /__pycache__
+*.csv
+*.pkl
+.DS_Store
+Thumbs.db
+.idea/
+.venv/ venv/ env/

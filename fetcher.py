@@ -4,7 +4,7 @@ import time
 
 class Fetcher:
     def __init__(self, exchange_name="bybit"):
-        print(f"⚙️ Initializing exchange: {exchange_name}...")
+        print(f"Initializing exchange: {exchange_name}...")
         self.exchange = getattr(ccxt, exchange_name)({
             'enableRateLimit': True,
             'options': {
@@ -13,9 +13,10 @@ class Fetcher:
             }
         })
         self.exchange.load_markets()
-        print("✅ Markets loaded.")
+        print("Markets loaded.")
 
     def fetch_ohlcv(self, symbol, timeframe='1m', since=None, until=None, limit_per_call=1000):
+        
         # 1. Time convertation
         since_ms = int(since.timestamp() * 1000) if since else None
         until_ms = int(until.timestamp() * 1000) if until else None

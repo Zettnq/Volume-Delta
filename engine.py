@@ -61,14 +61,14 @@ class VolumeDeltaEngine:
                 until=self.config.until
             )
             if df_1m.empty:
-                print("❌ No data received from exchange")
+                print("No data received from exchange")
                 return pd.DataFrame()
             self._save_minute_data(df_1m)
         
         df_1m = df_1m[(df_1m.index >= self.config.since) & (df_1m.index <= self.config.until)]
         
         if df_1m.empty:
-            print("❌ No data in requested range after filtering")
+            print("No data in requested range after filtering")
             return pd.DataFrame()
 
         # 2. Delta
@@ -87,3 +87,50 @@ class VolumeDeltaEngine:
         }).dropna()
 
         return df_target
+
+    def export_csv(self, df: pd.DataFrame, custom_filename: str = None) -> str:
+        """
+        Export OHLCV + VD to CSV.
+        
+        Args:
+            df: DataFrame with volume delta
+            custom_filename: your filename (without .csv)
+            
+        Returns:
+            Path to file
+        """
+        if df.empty:
+            print("DataFrame is empty")
+            return None
+            
+        output_dir = Path(self.config.output_dir)
+        output_dir.mkdir(exist_ok=True)
+        
+        if custom_filename:
+            filename = f"{custom_filename}.csv"
+        else:
+            filename = (f"{self.config.symbol.replace('/', '_')}_"
+                       f"{self.config.target_tf}_"
+                       f"{self.config.method}_"
+                       f"{self.config.since.strftime('%Y%m%d')}_"
+                       f"{self.config.until.strftime('%Y%m%d')}.csv")
+        
+        output_path = output_dir / filename
+        
+        export_df = df.copy()
+        
+        export_df = export_df.reset_index()
+        export_df.rename(columns={'datetime': 'timestamp'}, inplace=True)
+        
+        cols = ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'volume_delta']
+        export_df = export_df[cols]
+        
+        export_df['timestamp'] = export_df['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
+        
+        export_df.to_csv(output_path, index=False)
+        
+        print(f"\n✓ CSV exported: {output_path}")
+        print(f"  Rows: {len(export_df)}")
+        print(f"  Size: {output_path.stat().st_size / 1024:.1f} KB")
+        
+        return str(output_path)

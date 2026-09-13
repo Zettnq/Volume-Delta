@@ -9,6 +9,7 @@ class CVDConfig:
     until: datetime = datetime(2024, 12, 31, tzinfo=timezone.utc)  
     exchange: str = "bybit"
     cache_dir: str = "cache"
+    output_dir: str = "output"
     force_reload: bool = False
     
     method: str = "bvc" 

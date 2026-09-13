@@ -3,7 +3,7 @@ import pandas as pd
 
 def plot_volume_delta(df, symbol, target_tf, method="bvc"):
     if df.empty:
-        print("DataFrame пуст, нечего отображать.")
+        print("Dataframe is empty")
         return
 
     x_start = df.index[0]
