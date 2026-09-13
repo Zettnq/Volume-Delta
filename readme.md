@@ -24,12 +24,13 @@ Candle volume is assigned to buys or sells based on candle direction:
 
 ### Bulk Volume Classification (BVC)
 Based on Easley, López de Prado, O'Hara (2012). Uses the distribution of normalized price changes to probabilistically estimate the buy share:
+```
 ΔP = Close(t) - Close(t-1)
 σ = EWMA(ΔP, span)
 z = ΔP / σ
 P_buy = CDF(z)
 Delta = Volume × (2 × P_buy - 1)
-
+```
 
 ---
 
@@ -56,7 +57,7 @@ Results are saved to the output/ folder.
 ---
 
 ### Structure 
-
+```
 Volume-Delta/
 ├── run.py          # Entry point
 ├── config.py       # Configuration
@@ -66,7 +67,7 @@ Volume-Delta/
 ├── plotter.py      # Visualization
 ├── requirements.txt
 └── LICENSE         # MIT
-
+```
 --- 
 
 ### License & disclaimer
