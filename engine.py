@@ -18,7 +18,7 @@ class VolumeDeltaEngine:
 
     def _cached_minute_data(self):
         if self.config.force_reload:
-            print("⚠️ Force reload enabled - ignoring cache")
+            print("Force reload enabled - ignoring cache")
             return None
             
         cache_path = Path(self.config.cache_dir) / f"{self.config.symbol.replace('/', '')}_1m.pkl"
@@ -34,7 +34,7 @@ class VolumeDeltaEngine:
                 print(f"✓ Cache covers requested period: {cache_start} → {cache_end}")
                 return df
             else:
-                print(f"⚠️ Cache does NOT cover requested period!")
+                print(f"Cache does NOT cover requested period!")
                 print(f"   Cache:    {cache_start} → {cache_end}")
                 print(f"   Required: {self.config.since} → {self.config.until}")
                 print(f"   Reloading data...")
@@ -129,7 +129,7 @@ class VolumeDeltaEngine:
         
         export_df.to_csv(output_path, index=False)
         
-        print(f"\n✓ CSV exported: {output_path}")
+        print(f"\n CSV exported: {output_path}")
         print(f"  Rows: {len(export_df)}")
         print(f"  Size: {output_path.stat().st_size / 1024:.1f} KB")
         
