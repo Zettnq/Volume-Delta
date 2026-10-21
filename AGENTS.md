@@ -22,4 +22,12 @@
 ## Parameters
 - The run period must be overridable without editing config.py.
   If asked for a date range different from config, pass it via CLI args
-  or a temp config, and say so in the plan.clau
+  or a temp config, and say so in the plan.
+
+## How to run Volume-Delta
+
+- NEVER edit config.py directly. All parameters are overridable via CLI.
+- Always use `python run.py --days-back N` for rolling windows
+  or `python run.py --since YYYY-MM-DD --until YYYY-MM-DD` for fixed ranges.
+- Use `python run.py --info` to inspect resolved config without running.
+- The pickle cache (cache/*.pkl) is binary — NEVER use Read on it.
